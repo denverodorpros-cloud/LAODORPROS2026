@@ -56,6 +56,11 @@
       "source": "/real-estate-odor-removal-los-angeles.html",
       "destination": "/real-estate-odor-removal-los-angeles",
       "permanent": true
+    },
+    {
+      "source": "/thank-you.html",
+      "destination": "/thank-you",
+      "permanent": true
     }
   ]
 }

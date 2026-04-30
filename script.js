@@ -1,5 +1,6 @@
 const PHONE = "424-553-9449";
 const EMAIL = "info@laodorpros.com";
+const THANK_YOU_URL = "/thank-you";
 let chatSoundPlayed = false;
 let audioUnlocked = false;
 
@@ -91,11 +92,65 @@ function encodeForm(form) {
   return encodeURIComponent(lines.join("\n"));
 }
 
+function formDataToObject(form) {
+  const data = new FormData(form);
+  const fields = {};
+  for (const [key, value] of data.entries()) {
+    if (String(value).trim()) fields[key] = String(value).trim();
+  }
+  return fields;
+}
+
+function setFormStatus(form, message, type = "info") {
+  let status = form.querySelector(".form-status");
+  if (!status) {
+    status = document.createElement("p");
+    status.className = "form-status";
+    status.setAttribute("role", "status");
+    form.appendChild(status);
+  }
+  status.textContent = message;
+  status.dataset.type = type;
+}
+
+async function submitLead({ form, source, chatHistory = [] }) {
+  const response = await fetch("/api/estimate", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      source,
+      fields: formDataToObject(form),
+      chatHistory,
+      pageUrl: window.location.href
+    })
+  });
+
+  const result = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    throw new Error(result.error || "Could not send request.");
+  }
+  return result;
+}
+
 document.querySelectorAll(".estimate-form").forEach((form) => {
-  form.addEventListener("submit", (event) => {
+  form.addEventListener("submit", async (event) => {
     event.preventDefault();
-    const subject = encodeURIComponent("Free odor removal estimate request");
-    window.location.href = `mailto:${EMAIL}?subject=${subject}&body=${encodeForm(form)}`;
+    const button = form.querySelector('button[type="submit"]');
+    if (button) button.disabled = true;
+    setFormStatus(form, "Sending your request...", "info");
+
+    try {
+      await submitLead({ form, source: "Website estimate form" });
+      form.reset();
+      setFormStatus(form, "Thank you. Your estimate request was sent to LA ODOR PROS.", "success");
+      window.location.href = THANK_YOU_URL;
+    } catch (error) {
+      const subject = encodeURIComponent("Free odor removal estimate request");
+      setFormStatus(form, `We could not send the form automatically. Please call ${PHONE} or email ${EMAIL}.`, "error");
+      window.location.href = `mailto:${EMAIL}?subject=${subject}&body=${encodeForm(form)}`;
+    } finally {
+      if (button) button.disabled = false;
+    }
   });
 });
 
@@ -298,21 +353,31 @@ if (chatEstimateToggle && chatEstimateForm) {
     chatEstimateForm.classList.toggle("open");
   });
 
-  chatEstimateForm.addEventListener("submit", (event) => {
+  chatEstimateForm.addEventListener("submit", async (event) => {
     event.preventDefault();
-    const data = new FormData(chatEstimateForm);
-    const lines = ["Free estimate request from website chat:"];
-    for (const [key, value] of data.entries()) {
-      if (value) lines.push(`${key}: ${value}`);
+    const button = chatEstimateForm.querySelector('button[type="submit"]');
+    if (button) button.disabled = true;
+    setFormStatus(chatEstimateForm, "Sending your request...", "info");
+
+    try {
+      await submitLead({
+        form: chatEstimateForm,
+        source: "Website chat estimate form",
+        chatHistory: chatHistory.slice(-10)
+      });
+      chatEstimateForm.reset();
+      setFormStatus(chatEstimateForm, "Sent. LA ODOR PROS received your estimate request.", "success");
+      addMessage("Thanks. Your estimate request was sent to LA ODOR PROS. You can also call 424-553-9449 for faster scheduling.", "bot");
+      window.location.href = THANK_YOU_URL;
+    } catch (error) {
+      const subject = encodeURIComponent("Free odor removal estimate request from chat");
+      const body = encodeURIComponent([...chatHistory.slice(-8), "", "Please call or email me about odor removal."].join("\n"));
+      setFormStatus(chatEstimateForm, `We could not send automatically. Please call ${PHONE} or email ${EMAIL}.`, "error");
+      window.location.href = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
+      addMessage("I could not send the request automatically. Please call 424-553-9449 or email info@laodorpros.com.", "bot");
+    } finally {
+      if (button) button.disabled = false;
     }
-    if (chatHistory.length) {
-      lines.push("", "Recent chat:");
-      lines.push(...chatHistory.slice(-8));
-    }
-    const subject = encodeURIComponent("Free odor removal estimate request from chat");
-    const body = encodeURIComponent(lines.join("\n"));
-    window.location.href = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
-    addMessage("Thanks. Your email app should open with the estimate request ready to send. You can also call 424-553-9449 for faster scheduling.", "bot");
   });
 }
 
@@ -332,9 +397,8 @@ if (chatForm) {
     const lower = text.toLowerCase();
     const wantsContact = ["contact me", "email me", "send message", "request callback", "call me"].some((phrase) => lower.includes(phrase));
     if (wantsContact) {
-      const subject = encodeURIComponent("Chat notification from LA ODOR PROS website");
-      const body = encodeURIComponent(`A visitor asked: ${text}`);
-      window.location.href = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
+      openChatEstimateForm();
+      addMessage("Please add your name, phone, and email in the estimate form so LA ODOR PROS can contact you.", "bot");
     }
   });
 }
