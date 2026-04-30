@@ -1,0 +1,61 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/about.html",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/faq.html",
+      "destination": "/faq",
+      "permanent": true
+    },
+    {
+      "source": "/services.html",
+      "destination": "/services",
+      "permanent": true
+    },
+    {
+      "source": "/odor-removal-los-angeles.html",
+      "destination": "/odor-removal-los-angeles",
+      "permanent": true
+    },
+    {
+      "source": "/pet-odor-removal-los-angeles.html",
+      "destination": "/pet-odor-removal-los-angeles",
+      "permanent": true
+    },
+    {
+      "source": "/smoke-odor-removal-los-angeles.html",
+      "destination": "/smoke-odor-removal-los-angeles",
+      "permanent": true
+    },
+    {
+      "source": "/marijuana-odor-removal-los-angeles.html",
+      "destination": "/marijuana-odor-removal-los-angeles",
+      "permanent": true
+    },
+    {
+      "source": "/mold-odor-removal-los-angeles.html",
+      "destination": "/mold-odor-removal-los-angeles",
+      "permanent": true
+    },
+    {
+      "source": "/vehicle-odor-removal-los-angeles.html",
+      "destination": "/vehicle-odor-removal-los-angeles",
+      "permanent": true
+    },
+    {
+      "source": "/real-estate-odor-removal-los-angeles.html",
+      "destination": "/real-estate-odor-removal-los-angeles",
+      "permanent": true
+    }
+  ]
+}

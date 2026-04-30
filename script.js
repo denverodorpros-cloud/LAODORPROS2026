@@ -106,6 +106,7 @@ const chatForm = document.querySelector(".chat-input");
 const chatInput = document.querySelector(".chat-input input");
 const chatEstimateToggle = document.querySelector(".chat-estimate-toggle");
 const chatEstimateForm = document.querySelector(".chat-estimate-form");
+const chatClose = document.querySelector(".chat-close");
 const chatHistory = [];
 const menuToggle = document.querySelector(".menu-toggle");
 const navLinks = document.querySelector(".nav-links");
@@ -284,6 +285,12 @@ if (chatButton && chatBox) {
       playChatChime();
     }, 900);
   }
+}
+
+if (chatClose && chatBox) {
+  chatClose.addEventListener("click", () => {
+    chatBox.classList.remove("open");
+  });
 }
 
 if (chatEstimateToggle && chatEstimateForm) {
