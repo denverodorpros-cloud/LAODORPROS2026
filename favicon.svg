@@ -1,14 +1,63 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
-  <defs>
-    <linearGradient id="g" x1="8" y1="86" x2="86" y2="8" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#13a66f"/>
-      <stop offset=".52" stop-color="#19aee6"/>
-      <stop offset="1" stop-color="#b6efff"/>
-    </linearGradient>
-  </defs>
-  <rect width="96" height="96" rx="22" fill="#eefbff"/>
-  <circle cx="34" cy="49" r="21" fill="none" stroke="url(#g)" stroke-width="9"/>
-  <circle cx="65" cy="32" r="10" fill="none" stroke="#13a66f" stroke-width="7"/>
-  <circle cx="66" cy="65" r="9" fill="none" stroke="#19aee6" stroke-width="7"/>
-  <text x="22" y="57" fill="#083a54" font-family="Arial, sans-serif" font-size="20" font-weight="800">O3</text>
-</svg>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Odor Removal Services Los Angeles | LA ODOR PROS</title>
+  <meta name="description" content="Explore LA ODOR PROS odor removal services in Los Angeles, including pet, smoke, marijuana, mold and musty, vehicle, real estate, and rental odor removal.">
+  <link rel="canonical" href="https://www.laodorpros.com/services">
+  <meta property="og:title" content="Odor Removal Services Los Angeles | LA ODOR PROS">
+  <meta property="og:description" content="Explore LA ODOR PROS odor removal services in Los Angeles, including pet, smoke, marijuana, mold and musty, vehicle, real estate, and rental odor removal.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="LA ODOR PROS">
+  <meta property="og:image" content="https://www.laodorpros.com/assets/social-preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="LA ODOR PROS O3 logo and Los Angeles ozone odor removal">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://www.laodorpros.com/assets/social-preview.png">
+  <link rel="icon" href="/assets/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="shortcut icon" href="/assets/favicon-32.png">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="/"><span class="logo-mark"><img src="/assets/la-odor-pros-o3-logo-small.png" alt="LA ODOR PROS O3 logo"></span><span>LA ODOR PROS</span></a>
+      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="/services">Services</a>
+        <a href="/about">About</a>
+        <a href="/faq">FAQ</a>
+        <a href="/odor-removal-los-angeles">Ads Landing</a>
+        <a class="btn btn-primary" href="tel:424-553-9449">Call Now</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <p class="eyebrow">Los Angeles odor removal services</p>
+        <h1>Professional ozone odor removal for homes, cars, rentals, and listings.</h1>
+        <p class="lead">Choose the odor problem you need handled. LA ODOR PROS serves Los Angeles and major cities within 150 miles.</p>
+        <div class="action-row"><a class="btn btn-primary" href="tel:424-553-9449">Call 424-553-9449</a><a class="btn btn-ghost" href="/#estimate">Free Estimate</a></div>
+      </div>
+    </section>
+    <section class="home-ozone-bg">
+      <div class="container">
+        <div class="services-grid">
+          <article class="service-card"><img src="/assets/pet-odor-dog-couch-optimized.jpg" alt="Dog sitting on a clean couch inside a bright home for pet odor removal in Los Angeles"><div><h3>Pet Odor Removal</h3><p>Dog, cat, urine, dander, and pet odor treatment for homes, apartments, and rentals.</p><a href="/pet-odor-removal-los-angeles">Pet odor service</a></div></article>
+          <article class="service-card"><img src="/assets/smoke-odor-person-smoking-chair-optimized.jpg" alt="Person smoking in a chair inside a home with visible smoke for smoke odor removal Los Angeles"><div><h3>Smoke Odor Removal</h3><p>Cigarette, cigar, tobacco, cooking smoke, and stale smoke odor removal.</p><a href="/smoke-odor-removal-los-angeles">Smoke odor service</a></div></article>
+          <article class="service-card"><img src="/assets/marijuana-odor-cannabis-home-optimized.jpg" alt="Cannabis leaves on a coffee table with light haze for marijuana odor removal in Los Angeles"><div><h3>Marijuana Odor Removal</h3><p>Cannabis odor neutralizing for apartments, homes, vehicles, rentals, and listings.</p><a href="/marijuana-odor-removal-los-angeles">Marijuana odor service</a></div></article>
+          <article class="service-card"><img src="/assets/mold-musty-basement-optimized.jpg" alt="Home basement interior for mold and musty odor removal in Los Angeles"><div><h3>Mold & Musty Odors</h3><p>Musty indoor air, mildew smells, stale rooms, and damp odor treatment after source control.</p><a href="/mold-odor-removal-los-angeles">Musty odor service</a></div></article>
+          <article class="service-card"><img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=70" alt="Clean car interior for vehicle odor removal in Los Angeles"><div><h3>Vehicle Odor Removal</h3><p>Smoke, pet, mildew, food, spill, and resale odor removal for cars, trucks, and vans.</p><a href="/vehicle-odor-removal-los-angeles">Vehicle odor service</a></div></article>
+          <article class="service-card"><img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=900&q=70" alt="Clean staged home exterior for real estate odor removal Los Angeles"><div><h3>Real Estate & Rentals</h3><p>Odor removal before listing, open houses, tenant turnover, move-in, and guest arrivals.</p><a href="/real-estate-odor-removal-los-angeles">Real estate service</a></div></article>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer"><div class="container footer-call"><a class="btn btn-primary footer-call-button" href="tel:424-553-9449"><span>Call Now</span><strong>424-553-9449</strong></a></div><div class="container footer-bottom">(c) 2026 LA ODOR PROS | Services | <a href="mailto:info@laodorpros.com">info@laodorpros.com</a></div></footer>
+  <script src="/script.js"></script>
+</body>
+</html>

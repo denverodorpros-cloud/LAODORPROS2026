@@ -1,15 +1,11 @@
-# LA ODOR PROS Website
-
-Static multi-page website for LA ODOR PROS, a Los Angeles ozone odor removal business.
-
-Open `index.html` in a browser to preview locally. All call buttons use `tel:424-553-9449`.
-
-## Lead Email Backend
-
-Estimate forms and chat estimate requests submit to `/api/estimate`, a Vercel serverless function that emails leads to `info@laodorpros.com` through Resend.
-
-Set these Vercel environment variables before relying on live form submissions:
-
-- `RESEND_API_KEY`: your Resend API key.
-- `LEAD_TO_EMAIL`: `info@laodorpros.com`
-- `LEAD_FROM_EMAIL`: use `LA ODOR PROS <onboarding@resend.dev>` for testing, then switch to a verified sender such as `LA ODOR PROS <info@laodorpros.com>` after the domain is verified in Resend.
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Mold & Musty Odor Removal Los Angeles | LA ODOR PROS</title><meta name="description" content="Mold and musty odor removal in Los Angeles for damp indoor smells, mildew odors, basements, apartments, homes, and rental properties."><link rel="canonical" href="https://www.laodorpros.com/mold-odor-removal-los-angeles">
+  <meta property="og:title" content="Mold & Musty Odor Removal Los Angeles | LA ODOR PROS">
+  <meta property="og:description" content="Mold and musty odor removal in Los Angeles for damp indoor smells, mildew odors, basements, apartments, homes, and rental properties.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="LA ODOR PROS">
+  <meta property="og:image" content="https://www.laodorpros.com/assets/social-preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="LA ODOR PROS O3 logo and Los Angeles ozone odor removal">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://www.laodorpros.com/assets/social-preview.png"><link rel="icon" href="/assets/favicon-32.png" type="image/png" sizes="32x32"><link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"><link rel="shortcut icon" href="/assets/favicon-32.png"><link rel="stylesheet" href="styles.css"></head><body><header class="site-header"><div class="container nav"><a class="brand" href="/"><span class="logo-mark"><img src="assets/la-odor-pros-o3-logo-small.png" alt="LA ODOR PROS O3 logo"></span><span>LA ODOR PROS</span></a><button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button><nav class="nav-links"><a href="/services">Services</a><a href="/faq">FAQ</a><a class="btn btn-primary" href="tel:424-553-9449">Call Now</a></nav></div></header><main><section class="page-hero" style="--hero-image:url('assets/mold-musty-basement-optimized.jpg')"><div class="container"><p class="eyebrow">Mold and musty odor removal Los Angeles</p><h1>Freshen damp, stale, and musty indoor spaces.</h1><p class="lead">After moisture problems are corrected, ozone treatment can help reduce lingering musty odor in rooms, rentals, and storage areas.</p><div class="action-row"><a class="btn btn-primary" href="tel:424-553-9449">Call Now</a><a class="btn btn-ghost" href="/#estimate">Free Estimate</a></div></div></section><section><div class="container content-grid"><article class="content-card"><h2>Musty odor treatment after source control</h2><p>Musty odor often points to moisture, mildew, or poor ventilation. We help treat the odor after the active water issue, leak, or mold source has been addressed.</p><h3>Best uses</h3><ul class="bullets"><li>Stale rooms and closets</li><li>Garages and storage spaces</li><li>Rental properties after moisture issues</li><li>Homes preparing for sale or move-in</li></ul><p>Ozone treatment is odor-focused and is not a substitute for mold remediation when active growth is present.</p></article><aside class="side-box"><h3>Musty odor estimate</h3><p>Call <a href="tel:424-553-9449">424-553-9449</a> for availability.</p><a class="btn btn-primary" href="/#estimate">Request Estimate</a></aside></div></section></main><footer class="site-footer"><div class="container footer-bottom">(c) 2026 LA ODOR PROS | Mold and musty odor removal Los Angeles</div></footer><script src="script.js"></script></body></html>
