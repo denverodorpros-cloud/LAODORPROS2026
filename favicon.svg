@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+  <defs>
+    <linearGradient id="g" x1="8" y1="86" x2="86" y2="8" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#13a66f"/>
+      <stop offset=".52" stop-color="#19aee6"/>
+      <stop offset="1" stop-color="#b6efff"/>
+    </linearGradient>
+  </defs>
+  <rect width="96" height="96" rx="22" fill="#eefbff"/>
+  <circle cx="34" cy="49" r="21" fill="none" stroke="url(#g)" stroke-width="9"/>
+  <circle cx="65" cy="32" r="10" fill="none" stroke="#13a66f" stroke-width="7"/>
+  <circle cx="66" cy="65" r="9" fill="none" stroke="#19aee6" stroke-width="7"/>
+  <text x="22" y="57" fill="#083a54" font-family="Arial, sans-serif" font-size="20" font-weight="800">O3</text>
+</svg>
