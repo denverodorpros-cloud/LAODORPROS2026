@@ -1,0 +1,11 @@
+{
+  "name": "la-odor-pros-website",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "node -e \"console.log('Static site build complete')\""
+  },
+  "engines": {
+    "node": "22.x"
+  }
+}
