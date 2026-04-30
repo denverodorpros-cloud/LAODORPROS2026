@@ -91,11 +91,13 @@ module.exports = async function handler(req, res) {
     const result = await response.json().catch(() => ({}));
 
     if (!response.ok) {
+      console.error("Resend email error", result);
       return res.status(502).json({ error: "Email provider rejected the message.", details: result });
     }
 
     return res.status(200).json({ ok: true, id: result.id });
   } catch (error) {
-    return res.status(500).json({ error: "Could not send estimate request." });
+    console.error("Estimate endpoint error", error);
+    return res.status(500).json({ error: "Could not send estimate request.", details: error.message });
   }
 };

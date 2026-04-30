@@ -1,8 +1,4 @@
-{
-  "name": "la-odor-pros-website",
-  "version": "1.0.0",
-  "private": true,
-  "engines": {
-    "node": "22.x"
-  }
-}
+User-agent: *
+Allow: /
+
+Sitemap: https://www.laodorpros.com/sitemap.xml
