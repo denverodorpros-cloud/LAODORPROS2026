@@ -690,6 +690,24 @@ details p { color: var(--muted); margin-bottom: 0; }
   .section-head { display: block; }
   .area-list { columns: 1; }
   .hero-panel { padding: 18px; }
+  .landing-header .brand > span:not(.logo-mark) {
+    display: none;
+  }
+  .landing-header .landing-top {
+    gap: 12px;
+  }
+  .landing-header .brand {
+    flex: 0 0 auto;
+  }
+  .landing-header .logo-mark {
+    width: 58px;
+    height: 58px;
+  }
+  .landing-header .btn {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding-inline: 12px;
+  }
   .thank-you-hero {
     min-height: auto;
     padding: 62px 0;
