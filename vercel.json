@@ -44,7 +44,12 @@
     },
     {
       "source": "/mold-odor-removal-los-angeles.html",
-      "destination": "/mold-odor-removal-los-angeles",
+      "destination": "/services",
+      "statusCode": 308
+    },
+    {
+      "source": "/mold-odor-removal-los-angeles",
+      "destination": "/services",
       "statusCode": 308
     },
     {
