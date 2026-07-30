@@ -6,10 +6,10 @@ Open `index.html` in a browser to preview locally. All call buttons use `tel:424
 
 ## Lead Email Backend
 
-Estimate forms and chat estimate requests submit to `/api/estimate`, a Vercel serverless function that emails leads to `info@laodorpros.com` through Resend.
+Estimate forms and chat estimate requests submit to `/api/estimate`, a Vercel serverless function that emails leads to `laodorpros@gmail.com` through Resend.
 
 Set these Vercel environment variables before relying on live form submissions:
 
 - `RESEND_API_KEY`: your Resend API key.
-- `LEAD_TO_EMAIL`: `info@laodorpros.com`
-- `LEAD_FROM_EMAIL`: use `LA ODOR PROS <onboarding@resend.dev>` for testing, then switch to a verified sender such as `LA ODOR PROS <info@laodorpros.com>` after the domain is verified in Resend.
+- `LEAD_TO_EMAIL`: `laodorpros@gmail.com`
+- `LEAD_FROM_EMAIL`: use `LA ODOR PROS <onboarding@resend.dev>` for testing. To send from a branded address later, verify a custom domain in Resend first.

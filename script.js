@@ -1,5 +1,5 @@
 const PHONE = "424-553-9449";
-const EMAIL = "info@laodorpros.com";
+const EMAIL = "laodorpros@gmail.com";
 const THANK_YOU_URL = "/thank-you";
 let chatSoundPlayed = false;
 let audioUnlocked = false;
@@ -369,7 +369,7 @@ if (chatEstimateToggle && chatEstimateForm) {
       window.location.href = THANK_YOU_URL;
     } catch (error) {
       setFormStatus(chatEstimateForm, `We could not send automatically. Please call ${PHONE} or email ${EMAIL}.`, "error");
-      addMessage("I could not send the request automatically. Please call 424-553-9449 or email info@laodorpros.com.", "bot");
+      addMessage("I could not send the request automatically. Please call 424-553-9449 or email laodorpros@gmail.com.", "bot");
     } finally {
       if (button) button.disabled = false;
     }

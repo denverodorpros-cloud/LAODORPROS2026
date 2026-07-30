@@ -1,4 +1,4 @@
-const TO_EMAIL = process.env.LEAD_TO_EMAIL || "info@laodorpros.com";
+const TO_EMAIL = process.env.LEAD_TO_EMAIL || "laodorpros@gmail.com";
 const FROM_EMAIL = process.env.LEAD_FROM_EMAIL || "LA ODOR PROS <onboarding@resend.dev>";
 
 function escapeHtml(value) {
