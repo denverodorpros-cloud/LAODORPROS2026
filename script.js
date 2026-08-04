@@ -405,3 +405,26 @@ if (chatForm) {
     }
   });
 }
+
+(function loadTawkVisitorMonitoring() {
+  if (document.querySelector('script[src*="embed.tawk.to/6a723d612539311d47e45ffb"]')) return;
+
+  window.Tawk_API = window.Tawk_API || {};
+  window.Tawk_LoadStart = new Date();
+  const existingOnLoad = window.Tawk_API.onLoad;
+
+  window.Tawk_API.onLoad = function () {
+    if (typeof existingOnLoad === "function") existingOnLoad();
+    if (typeof window.Tawk_API.hideWidget === "function") {
+      window.Tawk_API.hideWidget();
+    }
+  };
+
+  const tawkScript = document.createElement("script");
+  const firstScript = document.getElementsByTagName("script")[0];
+  tawkScript.async = true;
+  tawkScript.src = "https://embed.tawk.to/6a723d612539311d47e45ffb/default";
+  tawkScript.charset = "UTF-8";
+  tawkScript.setAttribute("crossorigin", "*");
+  firstScript.parentNode.insertBefore(tawkScript, firstScript);
+})();
