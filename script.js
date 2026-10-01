@@ -182,6 +182,89 @@ if (menuToggle && navLinks) {
 
 const PRICE_PER_SQ_FT = 0.7;
 
+const faqAnswers = [
+  {
+    "question": "What is ozone odor removal?",
+    "answer": "Ozone odor removal uses O3 gas to react with odor molecules in air, fabrics, vents, and porous surfaces. It is designed to neutralize odors rather than mask them."
+  },
+  {
+    "question": "Is ozone treatment safe for my family?",
+    "answer": "The treated area must be unoccupied by people, pets, and plants during ozone treatment. After the process, the space is ventilated before normal use resumes."
+  },
+  {
+    "question": "Does ozone treatment remove pet urine odor in Los Angeles homes?",
+    "answer": "It can help with pet odor in air, carpets, furniture, and room surfaces. Severe urine contamination may also require cleaning, pad replacement, sealing, or material removal."
+  },
+  {
+    "question": "Can you remove smoke odor from an apartment?",
+    "answer": "Yes. Smoke odor removal usually targets walls, ceilings, vents, fabrics, cabinets, and flooring after the smoke source and residue are addressed."
+  },
+  {
+    "question": "Does ozone remove marijuana smell?",
+    "answer": "Ozone treatment can help neutralize cannabis odor in homes, apartments, vehicles, and rentals, especially when paired with cleaning of fabrics and ventilation pathways."
+  },
+  {
+    "question": "Can ozone help with cooking and food odors?",
+    "answer": "Yes. Ozone treatment can help reduce lingering cooking, food, and stale indoor odors after trash, spills, residue, and odor sources are cleaned or removed."
+  },
+  {
+    "question": "How long does ozone odor removal take?",
+    "answer": "Many treatments take several hours, while larger or more severe jobs can require longer treatment and ventilation time."
+  },
+  {
+    "question": "Do I need to leave my home during treatment?",
+    "answer": "Yes. The treated area must remain empty during ozone treatment and until it has been properly ventilated."
+  },
+  {
+    "question": "Can you treat cars and trucks?",
+    "answer": "Yes. Vehicle odor removal can address smoke, pet, spill, food, stale, and resale odors in upholstery, carpets, vents, and trunks."
+  },
+  {
+    "question": "How much does odor removal cost in Los Angeles?",
+    "answer": "Cost depends on odor type, severity, square footage, access, and whether the job is a home, car, rental, or commercial space. LA ODOR PROS provides free estimates."
+  },
+  {
+    "question": "Do you offer same-day odor removal?",
+    "answer": "Same-day and next-day options may be available depending on schedule and location. Calling 424-553-9449 is the fastest way to check availability."
+  },
+  {
+    "question": "Do you serve cities outside Los Angeles?",
+    "answer": "Yes. LA ODOR PROS serves Los Angeles and major cities within about 150 miles, including many Southern California communities."
+  },
+  {
+    "question": "Will ozone remove all odors permanently?",
+    "answer": "Ozone can deliver strong results when the odor source is removed or controlled. If the source remains, such as active moisture or repeated pet accidents, odor may return."
+  },
+  {
+    "question": "Is ozone odor removal good for real estate listings?",
+    "answer": "Yes. Fresh-smelling homes can help buyers and renters focus on the property rather than odors from previous occupants, pets, smoke, or moisture."
+  },
+  {
+    "question": "Can ozone treat HVAC odor?",
+    "answer": "Ozone can move through air pathways, but HVAC odor may require filter changes, duct cleaning, or source correction depending on the cause."
+  },
+  {
+    "question": "Do you use fragrance?",
+    "answer": "The goal is odor neutralization first. A light finishing scent may be used only when appropriate and requested."
+  },
+  {
+    "question": "Should I clean before ozone treatment?",
+    "answer": "Basic source cleaning helps. Remove trash, soiled items, ash, pet waste, wet materials, and heavily contaminated belongings when possible."
+  },
+  {
+    "question": "Can you treat furnished homes?",
+    "answer": "Yes, ozone can reach many fabrics and furnishings. Some delicate items, plants, and sensitive materials may need to be removed or protected."
+  },
+  {
+    "question": "Do you work with property managers and landlords?",
+    "answer": "Yes. Rental turnover, apartment odor removal, move-out odor problems, and tenant-ready treatments are common service requests."
+  },
+  {
+    "question": "How do I request a free estimate?",
+    "answer": "Call 424-553-9449 or use the estimate form on the website. Include the city, odor source, space size, and timeline for the most useful reply."
+  }
+];
+
 const answers = [
   { keys: ["what is ozone", "ozone odor", "o3", "how does ozone"], text: "Ozone odor removal uses O3 gas to react with odor molecules in an unoccupied space. The goal is to neutralize odor instead of covering it with fragrance." },
   { keys: ["break down odor", "neutralize", "molecules", "oxidize", "oxidation"], text: "Ozone works by oxidation. O3 reacts with many odor-causing molecules in the air and on exposed surfaces, which can help neutralize the smell instead of simply masking it." },
@@ -245,6 +328,10 @@ function normalizeText(text) {
   return text.toLowerCase().replace(/[^a-z0-9\s]/g, " ").replace(/\s+/g, " ").trim();
 }
 
+function includesTerm(text, term) {
+  return new RegExp(`\\b${normalizeText(term)}(?:s)?\\b`).test(text);
+}
+
 function findBestAnswer(text) {
   const lower = normalizeText(text);
   let best = null;
@@ -254,11 +341,11 @@ function findBestAnswer(text) {
     let score = 0;
     item.keys.forEach((key) => {
       const normalizedKey = normalizeText(key);
-      if (lower.includes(normalizedKey)) {
+      if (includesTerm(lower, normalizedKey)) {
         score += normalizedKey.split(" ").length + 1;
       } else {
         normalizedKey.split(" ").forEach((word) => {
-          if (word.length > 3 && lower.includes(word)) score += 0.35;
+          if (word.length > 3 && includesTerm(lower, word)) score += 0.35;
         });
       }
     });
@@ -285,7 +372,7 @@ function answerServiceQuestion(text) {
   const asksDoYou = /\b(do|can|could|will)\s+(you|u|la odor pros)\b/.test(lower) || lower.includes("do you remove") || lower.includes("can you remove");
   if (!asksDoYou) return null;
 
-  const found = serviceQuestions.find((item) => item.terms.some((term) => lower.includes(term)));
+  const found = serviceQuestions.find((item) => item.terms.some((term) => includesTerm(lower, term)));
   if (!found) return null;
   if (found.service === "mold and musty odor") return found.detail;
   if (found.service === "vehicle odor") return `${found.detail} Call ${PHONE} for vehicle scheduling and pricing. A travel fee may apply if the service location is more than 20 miles from Los Angeles.`;
@@ -316,11 +403,19 @@ function openChatEstimateForm() {
 
 function replyToChat(text) {
   const lower = text.toLowerCase();
+  const faq = faqAnswers.find((item) => normalizeText(item.question) === normalizeText(text));
+  if (faq) return faq.answer;
+  if (/\b(safe|safely|safety|stay|remain|occupied)\b/.test(lower)) {
+    return "During ozone treatment, people, pets, and plants must be out of the treated area. After treatment, the space is ventilated before normal use resumes. Call LA ODOR PROS to confirm preparation and re-entry instructions.";
+  }
+  if (/\b(cooking|food|kitchen)\b/.test(lower) && /\b(odor|odors|smell|smells)\b/.test(lower)) {
+    return "Yes. Ozone treatment can help reduce lingering cooking and food odors after trash, spills, residue, and odor sources are cleaned or removed.";
+  }
   const asksBoatRvPrice = /(boat|rv|recreational vehicle).*(price|cost|estimate|quote|how much)|(?:price|cost|estimate|quote|how much).*(boat|rv|recreational vehicle)/.test(lower);
   if (asksBoatRvPrice) {
     return `Boat and RV odor removal starts from $450 depending on odor type, severity, size, and access. A travel fee may apply if the service location is more than 20 miles from Los Angeles. Call ${PHONE} to confirm scheduling and final pricing.`;
   }
-  const asksVehiclePrice = /(car|vehicle|truck|auto|van|rideshare).*(price|cost|estimate|quote|how much)|(?:price|cost|estimate|quote|how much).*(car|vehicle|truck|auto|van|rideshare)/.test(lower);
+  const asksVehiclePrice = /\b(cars?|vehicles?|trucks?|auto|vans?|rideshare|sedans?|suvs?)\b.*(price|cost|estimate|quote|how much)|(?:price|cost|estimate|quote|how much).*\b(cars?|vehicles?|trucks?|auto|vans?|rideshare|sedans?|suvs?)\b/.test(lower);
   if (asksVehiclePrice) {
     return `Car odor removal is $400 for sedans and SUVs. We treat cars at the client's property for convenience, usually in the garage or driveway, and need access to a power outlet for our extension cord. A travel fee may apply if the location is more than 20 miles from Los Angeles. Call ${PHONE} to confirm scheduling.`;
   }

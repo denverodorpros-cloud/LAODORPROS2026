@@ -2,7 +2,9 @@
 
 Static multi-page website for LA ODOR PROS, a Los Angeles ozone odor removal business.
 
-Open `index.html` in a browser to preview locally. All call buttons use `tel:424-553-9449`.
+Run `python preview.py` and open `http://127.0.0.1:8095/` to preview locally with working clean page URLs. All call buttons use `tel:424-553-9449`.
+
+The local preview does not send email. Form submissions display a contact fallback; real delivery requires the configured Vercel deployment.
 
 ## Lead Email Backend
 

@@ -62,13 +62,27 @@ module.exports = async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
+  const payload = req.body;
+  const fields = payload && payload.fields;
+  if (!fields || typeof fields !== "object" || Array.isArray(fields) ||
+      Object.keys(fields).length > 20 ||
+      Object.values(fields).some(value => typeof value !== "string" || value.length > 5000)) {
+    return res.status(400).json({ error: "Please provide valid estimate details." });
+  }
+  const name = fields.Name || fields["First name"];
+  const email = fields.Email;
+  if (!name || !name.trim() || (!fields.Phone?.trim() && !email?.trim()) ||
+      (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) ||
+      (payload.chatHistory !== undefined && (!Array.isArray(payload.chatHistory) ||
+        payload.chatHistory.length > 12 || payload.chatHistory.some(line => typeof line !== "string" || line.length > 5000)))) {
+    return res.status(400).json({ error: "Please include your name and a valid phone number or email." });
+  }
+
   if (!process.env.RESEND_API_KEY) {
     return res.status(500).json({ error: "Email backend is not configured yet." });
   }
 
   try {
-    const payload = req.body || {};
-    const fields = payload.fields || {};
     const visitorName = fields.Name || fields["First name"] || "Website visitor";
     const visitorPhone = fields.Phone ? ` - ${fields.Phone}` : "";
     const subject = `New odor removal estimate request: ${visitorName}${visitorPhone}`;
@@ -79,6 +93,7 @@ module.exports = async function handler(req, res) {
         Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
         "Content-Type": "application/json"
       },
+      signal: AbortSignal.timeout(15000),
       body: JSON.stringify({
         from: FROM_EMAIL,
         to: TO_EMAIL,
@@ -92,12 +107,12 @@ module.exports = async function handler(req, res) {
 
     if (!response.ok) {
       console.error("Resend email error", result);
-      return res.status(502).json({ error: "Email provider rejected the message.", details: result });
+      return res.status(502).json({ error: "Email provider rejected the message." });
     }
 
     return res.status(200).json({ ok: true, id: result.id });
   } catch (error) {
     console.error("Estimate endpoint error", error);
-    return res.status(500).json({ error: "Could not send estimate request.", details: error.message });
+    return res.status(500).json({ error: "Could not send estimate request." });
   }
 };
