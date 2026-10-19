@@ -180,7 +180,7 @@ if (menuToggle && navLinks) {
   });
 }
 
-const PRICE_PER_SQ_FT = 0.7;
+const ESTIMATE_MESSAGE = "Please fill out the Free Estimate form below. LA ODOR PROS will review your details and contact you with a quote.";
 
 const faqAnswers = [
   {
@@ -291,10 +291,10 @@ const answers = [
   { keys: ["walls", "drywall", "paint", "ceiling", "cabinets"], text: "Odors can absorb into walls, ceilings, cabinets, and painted surfaces. Ozone may help, but severe smoke or contamination can sometimes require washing, sealing, or repainting." },
   { keys: ["furnished", "furniture", "couch", "sofa"], text: "Furnished homes can often be treated. Some delicate items, plants, and sensitive materials may need to be removed or protected before ozone treatment." },
   { keys: ["property managers", "landlords", "tenant turnover"], text: "Yes, LA ODOR PROS works with property managers and landlords for rental turnover, apartment odor removal, move-out odor problems, and tenant-ready treatments." },
-  { keys: ["price", "cost", "pricing", "estimate", "quote", "sq ft", "sqft", "square feet", "square foot"], text: `Tell me the square footage, like "1000 sq ft", and I can give you a quick home estimate. For vehicles, car odor removal is $400 for sedans and SUVs, and boat or RV odor removal starts from $450. A travel fee may apply to any service located more than 20 miles from Los Angeles.` },
+  { keys: ["price", "cost", "pricing", "estimate", "quote"], text: ESTIMATE_MESSAGE },
   { keys: ["travel fee", "travel charge", "mileage", "distance", "20 miles"], text: "A travel fee may apply to any LA ODOR PROS service located more than 20 miles from Los Angeles. We can confirm that when we review the address and appointment details." },
-  { keys: ["small room", "bedroom", "bathroom", "studio"], text: "Small rooms can often be treated, but the best estimate depends on square footage, odor type, and severity. Send the room size or type the square footage for a quick estimate." },
-  { keys: ["apartment", "condo", "house", "home"], text: "LA ODOR PROS treats apartments, condos, and homes for pet, smoke, cannabis, and rental turnover odors. Type the square footage for a quick estimate." },
+  { keys: ["small room", "bedroom", "bathroom", "studio"], text: "Small rooms can often be treated, but the best estimate depends on square footage, odor type, and severity. Include the room size and odor details in the Free Estimate form." },
+  { keys: ["apartment", "condo", "house", "home"], text: "LA ODOR PROS treats apartments, condos, and homes for pet, smoke, cannabis, and rental turnover odors. Use the Free Estimate form to request a quote." },
   { keys: ["airbnb", "short term rental", "guest", "host"], text: "Yes, ozone odor removal can help short-term rentals between guests, especially for smoke, cannabis, pet, and food smells. Timing matters because the space must be unoccupied and ventilated." },
   { keys: ["hotel", "office", "business", "commercial"], text: "Commercial odor removal may be available depending on the space, odor source, and access. Call LA ODOR PROS to review the site details and timing." },
   { keys: ["dead animal", "skunk", "trash", "garbage", "sewage"], text: "Strong source odors such as dead animal, trash, skunk, or sewage smells usually require source removal and cleaning first. Ozone can help with lingering odor after the source is handled." },
@@ -307,21 +307,7 @@ function extractSquareFeet(text) {
   const direct = lower.match(/(\d[\d,]*)\s*(sq\.?\s*ft|sqft|sf|square\s*(feet|foot)|squer\s*ft|sqf)\b/);
   if (direct) return Number(direct[1].replace(/,/g, ""));
 
-  if (/(home|house|apartment|condo|property|space|room|area|estimate|cost|price|quote)/.test(lower)) {
-    const number = lower.match(/\b(\d[\d,]*)\b/);
-    if (number) return Number(number[1].replace(/,/g, ""));
-  }
-
   return null;
-}
-
-function formatEstimate(squareFeet) {
-  const total = squareFeet * PRICE_PER_SQ_FT;
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: total % 1 === 0 ? 0 : 2
-  }).format(total);
 }
 
 function normalizeText(text) {
@@ -376,7 +362,7 @@ function answerServiceQuestion(text) {
   if (!found) return null;
   if (found.service === "mold and musty odor") return found.detail;
   if (found.service === "vehicle odor") return `${found.detail} Call ${PHONE} for vehicle scheduling and pricing. A travel fee may apply if the service location is more than 20 miles from Los Angeles.`;
-  return `${found.detail} Call ${PHONE} or type the square footage for a quick estimate. A travel fee may apply if the service location is more than 20 miles from Los Angeles.`;
+  return `${found.detail} Use the Free Estimate form to request a quote or call ${PHONE}. A travel fee may apply if the service location is more than 20 miles from Los Angeles.`;
 }
 
 function addMessage(text, type = "bot") {
@@ -401,32 +387,29 @@ function openChatEstimateForm() {
   }
 }
 
+function wantsEstimate(text) {
+  return /\b(quotes?|estimates?|prices?|pricing|costs?|charge|charges|charging|rate|rates|budget|how much|how expensive|afford)\b/i.test(text) ||
+    Boolean(extractSquareFeet(text)) || /^\s*\d[\d,]*\s*$/.test(text);
+}
+
 function replyToChat(text) {
   const lower = text.toLowerCase();
+  if (wantsEstimate(text)) return ESTIMATE_MESSAGE;
   const faq = faqAnswers.find((item) => normalizeText(item.question) === normalizeText(text));
   if (faq) return faq.answer;
   if (/\b(safe|safely|safety|stay|remain|occupied)\b/.test(lower)) {
     return "During ozone treatment, people, pets, and plants must be out of the treated area. After treatment, the space is ventilated before normal use resumes. Call LA ODOR PROS to confirm preparation and re-entry instructions.";
   }
+  if (/\b(tomorrow|today|schedule|scheduling|appointment|availability|book|booking)\b/.test(lower)) {
+    return `Same-day and next-day options may be available depending on schedule and location. Call ${PHONE} to confirm availability. This chat cannot book an appointment.`;
+  }
   if (/\b(cooking|food|kitchen)\b/.test(lower) && /\b(odor|odors|smell|smells)\b/.test(lower)) {
     return "Yes. Ozone treatment can help reduce lingering cooking and food odors after trash, spills, residue, and odor sources are cleaned or removed.";
   }
-  const asksBoatRvPrice = /(boat|rv|recreational vehicle).*(price|cost|estimate|quote|how much)|(?:price|cost|estimate|quote|how much).*(boat|rv|recreational vehicle)/.test(lower);
-  if (asksBoatRvPrice) {
-    return `Boat and RV odor removal starts from $450 depending on odor type, severity, size, and access. A travel fee may apply if the service location is more than 20 miles from Los Angeles. Call ${PHONE} to confirm scheduling and final pricing.`;
-  }
-  const asksVehiclePrice = /\b(cars?|vehicles?|trucks?|auto|vans?|rideshare|sedans?|suvs?)\b.*(price|cost|estimate|quote|how much)|(?:price|cost|estimate|quote|how much).*\b(cars?|vehicles?|trucks?|auto|vans?|rideshare|sedans?|suvs?)\b/.test(lower);
-  if (asksVehiclePrice) {
-    return `Car odor removal is $400 for sedans and SUVs. We treat cars at the client's property for convenience, usually in the garage or driveway, and need access to a power outlet for our extension cord. A travel fee may apply if the location is more than 20 miles from Los Angeles. Call ${PHONE} to confirm scheduling.`;
-  }
   const serviceAnswer = answerServiceQuestion(text);
   if (serviceAnswer) return serviceAnswer;
-  const squareFeet = extractSquareFeet(text);
-  if (squareFeet && squareFeet > 0) {
-    return `A ${squareFeet.toLocaleString()} sq ft home is estimated at ${formatEstimate(squareFeet)}. Final pricing can vary based on odor severity, access, and preparation needs. A travel fee may apply if the service location is more than 20 miles from Los Angeles. Call ${PHONE} to confirm availability.`;
-  }
   const found = findBestAnswer(text);
-  return found ? found.text : `I can answer FAQ questions about ozone treatment, safety, pet odor, smoke odor, marijuana odor, vehicles, rentals, scheduling, and pricing. For an estimate, type the square footage, like "1000 sq ft".`;
+  return found ? found.text : `I can answer FAQ questions about ozone treatment, safety, pet odor, smoke odor, marijuana odor, vehicles, rentals, scheduling, and pricing. Use the Free Estimate form to request a quote.`;
 }
 
 if (chatButton && chatBox) {
@@ -488,8 +471,7 @@ if (chatForm) {
     chatInput.value = "";
     const reply = replyToChat(text);
     addMessage(reply, "bot");
-    if (/(estimate|quote|price|cost|sq\s*ft|sqft|square|how much)/i.test(text)) {
-      addMessage("When you are ready, tap \"Send Free Estimate Request\" and I will include your details for LA ODOR PROS.", "bot");
+    if (wantsEstimate(text)) {
       openChatEstimateForm();
     }
     const lower = text.toLowerCase();
