@@ -484,7 +484,7 @@ if (chatForm) {
 }
 
 (function loadTawkVisitorMonitoring() {
-  if (document.querySelector('script[src*="embed.tawk.to/6a723d612539311d47e45ffb"]')) return;
+  if (document.querySelector('script[src*="embed.tawk.to/6ad677f8eff71134d0065e44"]')) return;
 
   window.Tawk_API = window.Tawk_API || {};
   window.Tawk_LoadStart = new Date();
@@ -500,7 +500,7 @@ if (chatForm) {
   const tawkScript = document.createElement("script");
   const firstScript = document.getElementsByTagName("script")[0];
   tawkScript.async = true;
-  tawkScript.src = "https://embed.tawk.to/6a723d612539311d47e45ffb/default";
+  tawkScript.src = "https://embed.tawk.to/6ad677f8eff71134d0065e44/1k5as98m6";
   tawkScript.charset = "UTF-8";
   tawkScript.setAttribute("crossorigin", "*");
   firstScript.parentNode.insertBefore(tawkScript, firstScript);
