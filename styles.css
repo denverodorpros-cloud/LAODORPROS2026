@@ -961,6 +961,18 @@ a:focus-visible, button:focus-visible, summary:focus-visible { outline: 3px soli
   to { opacity: 1; transform: translateY(0); }
 }
 
+
+/* Full horizontal logo, including the tagline. */
+.brand { min-width: 0; }
+.brand-logo { display: block; width: 300px; max-width: 100%; height: auto; object-fit: contain; }
+.site-header .nav { padding-block: 10px; }
+.site-footer .brand { width: fit-content; max-width: 100%; padding: 8px; background: #fff; border-radius: 8px; }
+@media (max-width: 620px) {
+  .brand-logo { width: 230px; }
+  .landing-header .brand { max-width: 48%; }
+  .site-footer .brand-logo { width: 300px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: .01ms !important;
