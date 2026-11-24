@@ -2,9 +2,11 @@
 
 Static multi-page website for LA ODOR PROS, a Los Angeles ozone odor removal business.
 
-Run `python preview.py` and open `http://127.0.0.1:8095/` to preview locally with working clean page URLs. All call buttons use `tel:424-553-9449`.
+Run `node preview.cjs` and open `http://127.0.0.1:8096/` to preview locally with working clean page URLs. All call buttons use `tel:424-553-9449`.
 
-The local preview does not send email. Form submissions display a contact fallback; real delivery requires the configured Vercel deployment.
+The local preview does not send email. It runs the estimate handler with a simulated email provider so form submissions can be tested through the thank-you redirect. Real delivery still requires the configured Vercel deployment.
+
+Run `node --test tests/chatbot.cjs tests/redesign.cjs` for offline integration, metadata, route, and form checks. The redesign remains a local draft until approved for publishing.
 
 ## Lead Email Backend
 
