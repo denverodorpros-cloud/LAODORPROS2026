@@ -1,0 +1,20 @@
+.es-main-container, .es-main-content { width: 100% !important; max-width: none !important; }
+/* Scoped inside the Elfsight widget's open shadow root. */
+.es-widget-background-container, .es-background-base { background: transparent !important; }
+.es-widget-title-header { font: 700 30px/1.3 Arial, sans-serif !important; color: #171717 !important; margin-bottom: 20px !important; }
+.es-header-container { background: #f5f5f7 !important; border-radius: 18px !important; padding: 30px !important; min-height: 136px !important; box-sizing: border-box !important; }
+.es-header-heading-text { font-size: 25px !important; font-weight: 700 !important; }
+.es-header-write-review-button { background: #066bff !important; color: #fff !important; border-radius: 999px !important; font-weight: 700 !important; }
+.es-review-background-container { background: #f5f5f7 !important; border-radius: 18px !important; padding: 30px !important; }
+.es-review-container { min-height: 580px !important; }
+.es-review-author-name { font-size: 18px !important; font-weight: 600 !important; }
+.es-review-content-text-container { font-size: 20px !important; line-height: 1.45 !important; color: #222 !important; }
+.es-text-shortener { font-size: 20px !important; line-height: 1.45 !important; display: -webkit-box !important; -webkit-box-orient: vertical !important; -webkit-line-clamp: 16 !important; line-clamp: 16; max-height: 23.2em !important; height: auto !important; overflow: hidden !important; }
+.es-text-shortener-control { color: #0064eb !important; font-size: 20px !important; }
+@media (max-width: 620px) {
+ .es-widget-title-header { font-size: 24px !important; }
+ .es-header-container, .es-review-background-container { padding: 22px !important; }
+ .es-review-container { min-height: 430px !important; }
+ .es-review-content-text-container, .es-text-shortener-control, .es-text-shortener { font-size: 17px !important; }
+ .es-text-shortener { -webkit-line-clamp: 12 !important; line-clamp: 12; max-height: 17.4em !important; }
+}

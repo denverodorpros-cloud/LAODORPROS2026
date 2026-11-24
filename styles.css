@@ -983,3 +983,14 @@ a:focus-visible, button:focus-visible, summary:focus-visible { outline: 3px soli
   .reveal { opacity: 1; transform: none; }
   .process-band { background-attachment: scroll; }
 }
+
+/* Google reviews reference layout. */
+#reviews.customer-reviews { background: #eef8fc; }
+.customer-reviews { padding: 72px 0 84px; scroll-margin-top: 130px; }
+.customer-reviews > .container { width: min(1500px, calc(100% - 88px)); }
+.reviews-intro { margin-bottom: 26px; color: var(--ink); }
+.reviews-kicker { margin: 0 0 22px; color: #007fa5; font-size: .85rem; font-weight: 900; letter-spacing: .2em; text-transform: uppercase; }
+.reviews-intro h2 { font-family: Georgia, "Times New Roman", serif; font-weight: 400; font-size: clamp(2.6rem, 4.2vw, 4rem); line-height: 1.1; letter-spacing: -.035em; margin-bottom: 28px; }
+.reviews-intro > p:last-child { font-size: 1.18rem; margin: 0; }
+.reviews-google-link { margin-top: 34px; padding: 18px 28px; min-height: 64px; }
+@media (max-width: 620px) { .customer-reviews { padding: 48px 0 56px; } .customer-reviews > .container { width: calc(100% - 32px); } .reviews-intro h2 { font-size: 2.6rem; } .reviews-intro > p:last-child { font-size: 1rem; } }
