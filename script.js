@@ -505,3 +505,18 @@ if (chatForm) {
   tawkScript.setAttribute("crossorigin", "*");
   firstScript.parentNode.insertBefore(tawkScript, firstScript);
 })();
+
+// Notify once per browser tab session, after a short visible-page visit.
+(() => {
+  try { if (sessionStorage.getItem('laVisitorAlert')) return; } catch {}
+  setTimeout(async () => {
+    if (document.visibilityState !== 'visible') return;
+    try {
+      const response = await fetch('/api/visitor', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ path: location.pathname }), keepalive: true
+      });
+      if (response.ok) { try { sessionStorage.setItem('laVisitorAlert', '1'); } catch {} }
+    } catch { /* Visitor notifications must never interrupt the website. */ }
+  }, 4000);
+})();

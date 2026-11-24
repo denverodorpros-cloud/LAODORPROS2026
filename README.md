@@ -17,3 +17,7 @@ Set these Vercel environment variables before relying on live form submissions:
 - `RESEND_API_KEY`: your Resend API key.
 - `LEAD_TO_EMAIL`: `laodorpros@gmail.com`
 - `LEAD_FROM_EMAIL`: use `LA ODOR PROS <onboarding@resend.dev>` for testing. To send from a branded address later, verify a custom domain in Resend first.
+
+## Pushover visitor alerts
+
+Production secrets `PUSHOVER_APP_TOKEN` and `PUSHOVER_USER_KEY` enable `/api/visitor`. The shared script waits four seconds on a visible page before sending the page path only (no query string, contact details, or IP address). Session storage and a secure session cookie suppress repeat page alerts. Common bot user agents are skipped. A one-minute per-function-instance throttle coalesces busy traffic; it is not a unique-visitor analytics counter or a global rate limit. Notifications use normal priority and do not affect forms or navigation.
