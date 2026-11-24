@@ -1432,3 +1432,16 @@ city badges stay leaf green. */
     transition: none!important
   }
 }
+
+/* Confirmation page uses the same Southern California photography as the homepage. */
+.thank-you-hero {
+  background: linear-gradient(90deg, rgba(5,23,53,.9), rgba(5,30,48,.66)), url('/assets/la-socal-hero.jpg') center / cover;
+}
+.thank-you-hero h1 { color: #fff; }
+.thank-you-hero .lead { color: #eef7fc; }
+.thank-you-hero .eyebrow { color: #b9edff; }
+.thank-you-hero .btn-ghost { color: #fff; border-color: rgba(255,255,255,.7); background: rgba(9,39,105,.3); }
+.thank-you-hero .btn-ghost:hover { background: #092769; }
+@media (max-width: 640px) {
+  .thank-you-hero { background-position: 60% center; }
+}
