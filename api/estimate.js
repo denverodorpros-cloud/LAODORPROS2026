@@ -1,3 +1,38 @@
+// Keep estimate alerts independent of visitor-session cookies and throttling.
+async function notifyEstimate(payload) {
+  try {
+    const token = process.env.PUSHOVER_APP_TOKEN;
+    const user = process.env.PUSHOVER_USER_KEY;
+    if (!token || !user) return 'disabled';
+    const services = new Map([
+      ['real estate & rentals', 'Real Estate & Rentals'],
+      ['real estate / rental odor removal', 'Real Estate & Rentals'],
+      ['pet odor removal', 'Pet Odor Removal'],
+      ['smoke odor removal', 'Smoke Odor Removal'],
+      ['marijuana odor removal', 'Marijuana Odor Removal'],
+      ['vehicle odor removal', 'Vehicle Odor Removal']
+    ]);
+    const value = payload.fields.Service;
+    const service = services.get(typeof value === 'string' ? value.trim().toLowerCase() : '') || 'Not specified';
+    const paths = new Set(['/', '/about', '/faq', '/services', '/odor-removal-los-angeles', '/thank-you',
+      '/pet-odor-removal-los-angeles', '/smoke-odor-removal-los-angeles', '/marijuana-odor-removal-los-angeles',
+      '/vehicle-odor-removal-los-angeles', '/real-estate-odor-removal-los-angeles']);
+    let path = '/';
+    try {
+      const url = new URL(payload.pageUrl);
+      if (['https://www.laodorpros.com', 'https://laodorpros.com'].includes(url.origin) && paths.has(url.pathname)) path = url.pathname;
+    } catch { /* Unknown URLs use the fixed homepage label. */ }
+    const response = await fetch('https://api.pushover.net/1/messages.json', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      signal: AbortSignal.timeout(3000),
+      body: JSON.stringify({ token, user, title: 'LA ODOR PROS — Free Estimate request', priority: 0,
+        message: 'Service: ' + service + '\nPage: ' + path })
+    });
+    const result = await response.json().catch(() => ({}));
+    return response.ok && result.status === 1 ? 'accepted' : 'failed';
+  } catch { return 'failed'; }
+}
+
 const TO_EMAIL = process.env.LEAD_TO_EMAIL || "info@laodorpros.com";
 const FROM_EMAIL = process.env.LEAD_FROM_EMAIL || "LA ODOR PROS <onboarding@resend.dev>";
 
@@ -62,13 +97,28 @@ module.exports = async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
+  const payload = req.body;
+  const fields = payload && payload.fields;
+  if (!fields || typeof fields !== "object" || Array.isArray(fields) ||
+      Object.keys(fields).length > 20 ||
+      Object.values(fields).some(value => typeof value !== "string" || value.length > 5000)) {
+    return res.status(400).json({ error: "Please provide valid estimate details." });
+  }
+  const name = fields.Name || fields["First name"];
+  const email = fields.Email;
+  if (!name || !name.trim() || (!fields.Phone?.trim() && !email?.trim()) ||
+      (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) ||
+      (payload.chatHistory !== undefined && (!Array.isArray(payload.chatHistory) ||
+        payload.chatHistory.length > 12 || payload.chatHistory.some(line => typeof line !== "string" || line.length > 5000)))) {
+    return res.status(400).json({ error: "Please include your name and a valid phone number or email." });
+  }
+
   if (!process.env.RESEND_API_KEY) {
     return res.status(500).json({ error: "Email backend is not configured yet." });
   }
 
   try {
-    const payload = req.body || {};
-    const fields = payload.fields || {};
+
     const visitorName = fields.Name || fields["First name"] || "Website visitor";
     const visitorPhone = fields.Phone ? ` - ${fields.Phone}` : "";
     const subject = `New odor removal estimate request: ${visitorName}${visitorPhone}`;
@@ -94,7 +144,8 @@ module.exports = async function handler(req, res) {
       return res.status(502).json({ error: "Email provider rejected the message.", details: result });
     }
 
-    return res.status(200).json({ ok: true, id: result.id });
+    const notification = await notifyEstimate(payload);
+    return res.status(200).json({ ok: true, id: result.id, notification });
   } catch (error) {
     return res.status(500).json({ error: "Could not send estimate request." });
   }

@@ -21,3 +21,7 @@ Set these Vercel environment variables before relying on live form submissions:
 ## Pushover visitor alerts
 
 Production secrets `PUSHOVER_APP_TOKEN` and `PUSHOVER_USER_KEY` enable `/api/visitor`. The shared script waits four seconds on a visible page before sending the page path only (no query string, contact details, or IP address). Session storage and a secure session cookie suppress repeat page alerts. Common bot user agents are skipped. A one-minute per-function-instance throttle coalesces busy traffic; it is not a unique-visitor analytics counter or a global rate limit. Notifications use normal priority and do not affect forms or navigation.
+
+## Free Estimate Pushover alerts
+
+After email-provider acceptance, every estimate handler sends a normal-priority alert titled LA ODOR PROS — Free Estimate request. Only fixed service labels and allowlisted LA page paths are included; unknown values become Not specified and /. Existing production Pushover secrets are reused. Visitor cookies/throttling do not apply. Push delivery has a 3-second timeout and no retries; failures or absent credentials preserve email success and the Thank You redirect. The API response reports notification accepted/disabled/failed without customer data or secrets. Acceptance does not confirm inbox or phone delivery.
