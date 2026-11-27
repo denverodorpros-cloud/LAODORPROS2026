@@ -25,3 +25,9 @@ Production secrets `PUSHOVER_APP_TOKEN` and `PUSHOVER_USER_KEY` enable `/api/vis
 ## Free Estimate Pushover alerts
 
 After email-provider acceptance, every estimate handler sends a normal-priority alert titled LA ODOR PROS — Free Estimate request. Only fixed service labels and allowlisted LA page paths are included; unknown values become Not specified and /. Existing production Pushover secrets are reused. Visitor cookies/throttling do not apply. Push delivery has a 3-second timeout and no retries; failures or absent credentials preserve email success and the Thank You redirect. The API response reports notification accepted/disabled/failed without customer data or secrets. Acceptance does not confirm inbox or phone delivery.
+
+## Location in notifications
+
+Visitor alerts use only Vercel city, country-region, and country headers; missing or malformed components read Unavailable. This is approximate network location, which VPNs, proxies, and mobile networks may distort. No IP, coordinates, or query parameters are sent. Existing visitor delay, suppression, filtering, and throttle remain unchanged.
+
+All estimate forms offer optional City and ZIP/postal code. After email acceptance these explicitly entered values are included in estimate alerts, with length/character validation and Not provided fallbacks. They are never derived from street addresses or visitor geolocation. Full submitted details remain in business email. Push failures still preserve form success.

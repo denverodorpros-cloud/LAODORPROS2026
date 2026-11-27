@@ -22,11 +22,15 @@ async function notifyEstimate(payload) {
       const url = new URL(payload.pageUrl);
       if (['https://www.laodorpros.com', 'https://laodorpros.com'].includes(url.origin) && paths.has(url.pathname)) path = url.pathname;
     } catch { /* Unknown URLs use the fixed homepage label. */ }
+    const cityValue = typeof payload.fields.City === 'string' ? payload.fields.City.trim() : '';
+    const postalValue = typeof payload.fields['ZIP/postal code'] === 'string' ? payload.fields['ZIP/postal code'].trim() : '';
+    const city = cityValue.length <= 80 && /^[\p{L}\p{M} .’'-]+$/u.test(cityValue) ? cityValue : 'Not provided';
+    const postal = postalValue.length <= 16 && /^[A-Za-z0-9][A-Za-z0-9 -]*$/.test(postalValue) ? postalValue : 'Not provided';
     const response = await fetch('https://api.pushover.net/1/messages.json', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       signal: AbortSignal.timeout(3000),
       body: JSON.stringify({ token, user, title: 'LA ODOR PROS — Free Estimate request', priority: 0,
-        message: 'Service: ' + service + '\nPage: ' + path })
+        message: 'Service: ' + service + '\nPage: ' + path + '\nCity: ' + city + '\nZIP/postal code: ' + postal })
     });
     const result = await response.json().catch(() => ({}));
     return response.ok && result.status === 1 ? 'accepted' : 'failed';

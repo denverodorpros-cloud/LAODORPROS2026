@@ -9,10 +9,17 @@ for(const scenario of ['ok','missing','foreign','cookie','bot','failed','timeout
  await s.module.exports(req,res);
  assert.equal(status,{ok:200,missing:503,foreign:403,cookie:204,bot:204,failed:502,timeout:502}[scenario]);
  assert.equal(calls.length,['ok','failed','timeout'].includes(scenario)?1:0);
- if(calls.length){assert.equal(calls[0].message,'A visitor opened /about');assert.equal(calls[0].priority,0);assert.equal(calls[0].url,'https://api.pushover.net/1/messages.json');}
+ if(calls.length){assert.equal(calls[0].message,'A visitor opened /about\nApproximate location\nCity: Unavailable\nRegion/state: Unavailable\nCountry: Unavailable');assert.equal(calls[0].priority,0);assert.equal(calls[0].url,'https://api.pushover.net/1/messages.json');}
  if(scenario==='ok'){
  assert.ok(headers['Set-Cookie'].includes('HttpOnly'));
  await s.module.exports(req,res);assert.equal(status,204);assert.equal(calls.length,1);
  }
 }
+});
+
+test('coarse hosting location formatting excludes other headers',()=>{
+const box={module:{exports:{}}};vm.runInNewContext(fs.readFileSync('api/visitor.js','utf8'),box);
+assert.equal(box.visitorLocation({'x-vercel-ip-city':'Los%20Angeles','x-vercel-ip-country-region':'CA','x-vercel-ip-country':'US','x-real-ip':'PRIVATE IP','x-vercel-ip-latitude':'PRIVATE GPS'}),'City: Los Angeles\nRegion/state: CA\nCountry: US');
+assert.equal(box.visitorLocation({'x-vercel-ip-city':'S%C3%A3o%20Paulo','x-vercel-ip-country-region':'SP','x-vercel-ip-country':'BR'}),'City: São Paulo\nRegion/state: SP\nCountry: BR');
+assert.equal(box.visitorLocation({'x-vercel-ip-city':'%invalid','x-vercel-ip-country-region':'\r\nInjected','x-vercel-ip-country':['US']}),'City: Unavailable\nRegion/state: Unavailable\nCountry: Unavailable');
 });
