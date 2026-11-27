@@ -10,7 +10,8 @@ function visitorLocation(headers) {
       return value.length <= 80 && /^[\p{L}\p{M}0-9 .’'-]+$/u.test(value) ? value : 'Unavailable';
     } catch { return 'Unavailable'; }
   };
-  return 'City: ' + clean('x-vercel-ip-city') + '\nRegion/state: ' + clean('x-vercel-ip-country-region') + '\nCountry: ' + clean('x-vercel-ip-country');
+  const parts = ['x-vercel-ip-city', 'x-vercel-ip-country-region', 'x-vercel-ip-country'].map(clean).filter(value => value !== 'Unavailable');
+  return 'Approx. location: ' + (parts.length ? parts.join(', ') : 'Unavailable');
 }
 
 // Server-only visitor alerts. Pushover credentials never reach the browser.
@@ -33,7 +34,7 @@ module.exports = async function handler(req, res) {
     const response = await fetch('https://api.pushover.net/1/messages.json', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       signal: AbortSignal.timeout(5000),
-      body: JSON.stringify({ token, user, title: 'LA ODOR PROS — Website visitor', message: 'A visitor opened ' + path + '\nApproximate location\n' + visitorLocation(req.headers), priority: 0 })
+      body: JSON.stringify({ token, user, title: 'LA ODOR PROS — Website visitor' + (req.body?.test === true ? ' — TEST ONLY' : ''), message: visitorLocation(req.headers), priority: 0 })
     });
     const data = await response.json().catch(() => ({}));
     if (!response.ok || data.status !== 1) return res.status(502).json({ error: 'Notification unavailable' });
